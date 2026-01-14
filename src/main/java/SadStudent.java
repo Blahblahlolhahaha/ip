@@ -1,27 +1,38 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SadStudent {
     public static void main(String[] args) {
-        System.out.println("Hello I'm a sad student! ｡°(°.◜ᯅ◝°)°｡\nHow can I help you today?");
-        ArrayList<Task> tasks = new ArrayList<>();
+        String text = "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░██████░░░░░░░░██████░░░░░░\r\n" + //
+                        "░░░░██░░░░░░░░░░░░░░░░░░░░██░░░░\r\n" + //
+                        "░░██░░░░░░░░░░░░░░░░░░░░░░░░██░░\r\n" + //
+                        "░░░░░░████░░░░░░░░░░░░████░░░░░░\r\n" + //
+                        "░░░░░░████░░░░░░░░░░░░████░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░░░████████████░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░████████████████░░░░░░░░\r\n" + //
+                        "░░░░░░████░░░░░░░░░░░░████░░░░░░\r\n" + //
+                        "░░░░░░██░░░░░░░░░░░░░░░░██░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\r\n" + //
+                        "░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n";
+        System.out.println(text + "Hello I'm a sad student\nHow can I help you today?");
+        TaskList list = new TaskList();
+        Scanner scanner = new Scanner(System.in);
         while(true){
-            Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             if(input.equals("list")) {
-                StringBuffer sb = new StringBuffer();
-                for(Task task : tasks) {
-                    sb.append(task.toString() + "\n");
-                }
-                System.out.println(sb.toString().stripTrailing());
+                
+                System.out.println(list.toString());
             }
             else if(input.equals("bye")) {
                 scanner.close();
                 break;
             }
             else {
-                Task task = new Task(input);
-                tasks.add(task);
+                list.addTask(input);
                 System.out.println("added: " + input);
             }
         }
