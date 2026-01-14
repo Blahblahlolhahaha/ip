@@ -1,16 +1,30 @@
 public class Task {
-    private static int taskCount = 1;
-    private int id;
     private String name;
+    private boolean mark = false;
 
     public Task(String name) {
-        this.id = taskCount;
         this.name = name;
-        taskCount += 1;
+    }
+
+    public void mark() {
+        this.mark = true;
+    }
+
+    public void unmark() {
+        this.mark = false;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     @Override
     public String toString() {
-        return String.format("%d: %s", id, name);
+        String header = "[";
+        if (mark) {
+            header += "X";
+        }
+        header += "]";
+        return String.format("%s %s", header, name);
     }
 }
