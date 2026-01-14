@@ -13,15 +13,21 @@ public class TaskList {
     }
 
     public String mark(int index) {
+        if (index >= tasks.size() || index < 0) {
+            return "";
+        }
         Task task = this.tasks.get(index);
         task.mark();
-        return task.getName();
+        return task.toString();
     }
 
     public String unmark(int index) {
+        if (index >= tasks.size() || index < 0) {
+            return "";
+        }
         Task task = this.tasks.get(index);
         task.unmark();
-        return task.getName();
+        return task.toString();
     }
 
     @Override
