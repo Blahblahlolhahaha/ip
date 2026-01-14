@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     private String name;
     private boolean mark = false;
 
@@ -12,10 +12,6 @@ public class Task {
 
     public void unmark() {
         this.mark = false;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     @Override

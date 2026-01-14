@@ -7,9 +7,15 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public void addTask(String input) {
-        Task task = new Task(input);
-        tasks.add(task);
+    public Task parseTask(String input) {
+        String taskType = input.split(" ")[0];
+
+        switch (taskType) {
+            case "todo":
+                return parseTodo(input.substring(input.indexOf("todo ") + 5));
+            default:
+                return null;
+        }
     }
 
     public String mark(int index) {
@@ -28,6 +34,12 @@ public class TaskList {
         Task task = this.tasks.get(index);
         task.unmark();
         return task.toString();
+    }
+
+    private ToDo parseTodo(String input) {
+        ToDo todo = new ToDo(input);
+        tasks.add(todo);
+        return todo;
     }
 
     @Override
