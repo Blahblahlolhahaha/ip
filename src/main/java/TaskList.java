@@ -9,13 +9,16 @@ public class TaskList {
 
     public Task parseTask(String input) {
         String taskType = input.split(" ")[0];
+        String params = input.replaceFirst(taskType + " ", "");
         switch (taskType) {
             case "todo":
-                return parseTodo(input.substring(input.indexOf("todo ") + 5));
+                return parseTodo(params);
             case "deadline":
-                return parseDeadline(input.substring(input.indexOf("deadline ") + 9));
+                return parseDeadline(params);
+            case "event":
+                return parseEvent(params); 
             default:
-                System.out.println("I cant support this task type now ;-; Please choose from (todo, deadline)");
+                System.out.println("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
                 return null;
         }
     }
@@ -66,7 +69,34 @@ public class TaskList {
             return null;
         }
         Deadline deadline = new Deadline(name, by);
+        tasks.add(deadline);
         return deadline;
+    }
+
+    private Event parseEvent(String input) {
+        if (input.isBlank()) {
+            System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
+            return null;
+        }
+        String[] params = input.split(" /");
+        String name = params[0];
+        String from = "";
+        String to = "";
+        for (int i = 1; i < params.length; i++) {
+            if (params[i].startsWith("from ")) {
+                from = params[i].replaceFirst("from ", "");
+            }
+            else if (params[i].startsWith("to ")) {
+                to = params[i].replaceFirst("to ", "");
+            }
+        }
+        if (to.isBlank() || from.isBlank()) {
+            System.out.println("ehhh Event requires from and to field!\n Usage: event <task> /from <from> /to <to>");
+            return null;
+        }
+        Event event = new Event(name, from, to);
+        tasks.add(event);
+        return event;
     }
 
     @Override
