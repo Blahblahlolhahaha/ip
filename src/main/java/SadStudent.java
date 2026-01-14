@@ -16,6 +16,7 @@ public class SadStudent {
                 System.out.println(sb.toString().stripTrailing());
             }
             else if(input.equals("bye")) {
+                scanner.close();
                 break;
             }
             else {
