@@ -50,7 +50,7 @@ public class SadStudent {
             } else {
                 Task task = list.parseTask(input);
                 if (task != null) {
-                    System.out.println("added: " + task.toString());
+                    System.out.println(String.format("added: %s\nYou have %d tasks now!", task.toString(), list.getNumberOfTasks()));
                 }
             }
         }
