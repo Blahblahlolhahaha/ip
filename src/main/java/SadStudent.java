@@ -28,6 +28,20 @@ public class SadStudent {
             } else if (input.equals("bye")) {
                 scanner.close();
                 break;
+            } else if (input.startsWith("delete")) {
+                try {
+                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
+                    Task task = list.removeTask(index);
+                    if (task != null) {
+                        System.out.println(
+                                String.format("Task removed: %s\n Out of sight out of mind :D", task.toString()));
+
+                    } else {
+                        System.out.println("Nuuuu index out of range :(");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Please delete a valid task!");
+                }
             } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
                 try {
                     int index = Integer.parseInt(input.split(" ")[1]) - 1;
@@ -50,7 +64,8 @@ public class SadStudent {
             } else {
                 Task task = list.parseTask(input);
                 if (task != null) {
-                    System.out.println(String.format("added: %s\nYou have %d tasks now!", task.toString(), list.getNumberOfTasks()));
+                    System.out.println(String.format("added: %s\nYou have %d tasks now!", task.toString(),
+                            list.getNumberOfTasks()));
                 }
             }
         }

@@ -45,6 +45,14 @@ public class TaskList {
         return tasks.size();
     }
 
+    public Task removeTask(int index) {
+        if (index >= tasks.size() || index < 0) {
+            return null;
+        }
+        Task task = tasks.remove(index);
+        return task;
+    }
+
     private ToDo parseTodo(String input) {
         if (input.isBlank()) {
             System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
