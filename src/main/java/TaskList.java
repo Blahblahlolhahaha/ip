@@ -41,6 +41,10 @@ public class TaskList {
         return task.toString();
     }
 
+    public int getNumberOfTasks() {
+        return tasks.size();
+    }
+
     private ToDo parseTodo(String input) {
         if (input.isBlank()) {
             System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
