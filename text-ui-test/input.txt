@@ -1,0 +1,23 @@
+todo crying myself to sleep tonight
+todo
+deadline finish assignment /by tmr      
+deadline gg 
+mark 1
+mark 4
+mark 0
+unmark 2
+unmark 1
+mark 1
+list
+event see fren /from tmr
+event see fren /from tmr /to tmr
+mark 3
+delete 2
+list
+unmark 2
+event play game /to next week /from next week
+sad
+delete 3
+event play game /to next week /from this week
+list
+bye
