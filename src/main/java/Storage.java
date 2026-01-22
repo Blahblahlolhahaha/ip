@@ -19,7 +19,7 @@ public class Storage {
         TaskList taskList = new TaskList();
         while(scanner.hasNextLine()) {
             String taskLine = scanner.nextLine();
-            Task task = Task.parseTask(taskLine);
+            Task task = Task.parseSavedTask(taskLine);
             if(task != null) {
                 taskList.addTask(task);
             }

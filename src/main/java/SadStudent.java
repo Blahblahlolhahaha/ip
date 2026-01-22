@@ -58,7 +58,8 @@ public class SadStudent {
                     }
 
                 } else {
-                    Task task = list.parseTask(input);
+                    Task task = Task.parseSavedTask(input);
+                    list.addTask(task);
                     if (task != null) {
                         System.out.println(String.format("added: %s\nYou have %d tasks now!", task.toString(),
                                 list.getNumberOfTasks()));
