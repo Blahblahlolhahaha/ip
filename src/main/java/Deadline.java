@@ -7,6 +7,11 @@ public class Deadline extends Task{
     }
 
     @Override
+    public String store() {
+        return String.format("D|%s|%s", super.toString(), deadline);
+    }
+
+    @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), deadline);
     }

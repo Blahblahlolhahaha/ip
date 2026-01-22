@@ -7,10 +7,15 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
+    public void addTask(Task task) {
+        this.tasks.add(task);
+    }
+
     public Task parseTask(String input) {
         String taskType = input.split(" ")[0];
         String params = input.replaceFirst(taskType, "");
         params = params.strip();
+        
         switch (taskType) {
             case "todo":
                 return parseTodo(params);
