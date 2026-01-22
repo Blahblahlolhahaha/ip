@@ -8,9 +8,15 @@ public class Event extends Task{
         this.to = to;
     }
 
+    public Event(boolean mark, String name, String from, String to) {
+        super(mark, name);
+        this.from = from;
+        this.to = to;
+    }
+
     @Override
     public String store() {
-        return String.format("E|%s|%s|%s", super.toString(), from, to);
+        return String.format("E|%s|%s|%s", super.store(), from, to);
     }
 
     @Override

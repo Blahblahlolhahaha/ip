@@ -1,5 +1,7 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -12,7 +14,7 @@ public class Storage {
         }
     }
 
-    public TaskList LoadFile() throws FileNotFoundException {
+    public TaskList loadFile() throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         TaskList taskList = new TaskList();
         while(scanner.hasNextLine()) {
@@ -25,4 +27,11 @@ public class Storage {
         scanner.close();
         return taskList;
     }
+
+    public void storeFile(TaskList taskList) throws IOException {
+        String res = taskList.storeString();
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+        bw.write(res);
+        bw.close();
+    } 
 }

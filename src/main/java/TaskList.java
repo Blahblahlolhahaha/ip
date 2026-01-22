@@ -117,6 +117,14 @@ public class TaskList {
         return event;
     }
 
+    public String storeString() {
+        StringBuffer sb = new StringBuffer();
+        for(Task task : tasks) {
+            sb.append(task.store() + "\n");
+        }
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();

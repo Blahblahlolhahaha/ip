@@ -6,6 +6,11 @@ public abstract class Task {
         this.name = name;
     }
 
+    public Task(boolean mark, String name) {
+        this.name = name;
+        this.mark = mark;
+    }
+
     public void mark() {
         this.mark = true;
     }
@@ -33,14 +38,15 @@ public abstract class Task {
     }
 
     public static Task parseTask(String task) {
-        String[] params = task.split("|");
+        String[] params = task.split("\\|");
+        boolean mark = params[1].equals("X");
         switch (params[0]) {
             case "T":
-                return new ToDo(params[1]);
+                return new ToDo(mark, params[2]);
             case "D":
-                return new Deadline(params[1], params[2]);
+                return new Deadline(mark, params[2], params[3]);
             case "E":
-                return new Event(params[1], params[2], params[3]);
+                return new Event(mark, params[2], params[3], params[4]);
             default:
                 return null;
         }

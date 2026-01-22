@@ -6,9 +6,14 @@ public class Deadline extends Task{
         this.deadline = deadline;
     }
 
+    public Deadline(boolean mark, String name, String deadline) {
+        super(mark, name);
+        this.deadline = deadline;
+    }
+
     @Override
     public String store() {
-        return String.format("D|%s|%s", super.toString(), deadline);
+        return String.format("D|%s|%s", super.store(), deadline);
     }
 
     @Override

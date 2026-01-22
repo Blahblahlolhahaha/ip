@@ -4,9 +4,13 @@ public class ToDo extends Task {
         super(name);
     }
 
+    public ToDo(boolean mark, String name) {
+        super(mark, name);
+    }
+
     @Override
     public String store() {
-        return String.format("T|%s", super.toString());
+        return String.format("T|%s", super.store());
     }
 
     @Override
