@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class SadStudent {
 
     private UI ui;
+    private Parser parser;
 
     public SadStudent() {
         this.ui = new UI();
+        this.parser = new Parser();
     }
 
     public void run() {
@@ -21,46 +23,12 @@ public class SadStudent {
         while (true) {
             try {
                 String input = ui.getInput();
-                if (input.equals("list")) {
-                    ui.showMessage(list.toString());
-                } else if (input.equals("bye")) {
+                String res = parser.parseCommand(input, list);
+                if(res.isBlank()) {
                     ui.showMessage("Alright I go and cry myself to sleep T.T");
                     break;
-                } else if (input.startsWith("delete")) {
-                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
-                    Task task = list.removeTask(index);
-                    if (task != null) {
-                        ui.showMessage(
-                                String.format("Task removed: %s\n Out of sight out of mind :D", task.toString()));
-
-                    } else {
-                        ui.showMessage("Nuuuu index out of range :(");
-                    }
-                } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
-                    int index = Integer.parseInt(input.split(" ")[1]) - 1;
-                    String ending = "Yay, one task closer to sleeping! :D";
-                    String res = "";
-                    if (input.startsWith("un")) {
-                        ending = "Awwww please dont sike me :(";
-                        res = list.unmark(index);
-                    } else {
-                        res = list.mark(index);
-                    }
-                    if (res == "") {
-                        ui.showMessage("Nuuuu index out of range :(");
-                    } else {
-                        ui.showMessage(String.format("%s\n%s", ending, res));
-                    }
-                } else {
-                    Task task = Task.parseTask(input);
-                    if (task != null) {
-                        list.addTask(task);
-                    }
-                    if (task != null) {
-                        ui.showMessage(String.format("added: %s\nYou have %d tasks now!", task.toString(),
-                                list.getNumberOfTasks()));
-                    }
                 }
+                ui.showMessage(res);
                 storage.storeFile(list);
             } catch (DateTimeParseException e) {
                 ui.showMessage("Please indicate a valid date!");
@@ -68,7 +36,8 @@ public class SadStudent {
                 ui.showMessage("Please indicate a valid task!");
             } catch (IOException f) {
                 ui.showMessage("An error occured saving tasks to file ;-;");
-
+            } catch (SadStudentException e) {
+                ui.showMessage(e.getMessage());
             }
         }
     }

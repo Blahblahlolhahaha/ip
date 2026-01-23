@@ -55,8 +55,7 @@ public abstract class Task {
     public static Task parseTask(String input) {
         String taskType = input.split(" ")[0];
         if(!Task.taskTypes.contains(taskType)) {
-            System.out.println("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
-            return null;
+            throw new SadStudentException("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
         }
         String params = input.replaceFirst(taskType, "");
         params = params.strip();
@@ -73,8 +72,7 @@ public abstract class Task {
     
     private static ToDo parseTodo(String input) {
         if (input.isBlank()) {
-            System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
-            return null;
+            throw new SadStudentException("you specified tasktype but there was no task T.T. You cheated on me!!!");
         }
         ToDo todo = new ToDo(input);
         return todo;
@@ -82,8 +80,7 @@ public abstract class Task {
 
     private static Deadline parseDeadline(String input) {
         if (input.isBlank()) {
-            System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
-            return null;
+            throw new SadStudentException("you specified tasktype but there was no task T.T. You cheated on me!!!");
         }
         String[] params = input.split(" /");
         String name = params[0];
@@ -94,8 +91,7 @@ public abstract class Task {
             }
         }
         if (byStr.isBlank()) {
-            System.out.println("ehhh Deadline requires by field!\n Usage: deadline <task> /by <by>");
-            return null;
+            throw new SadStudentException("ehhh Deadline requires by field!\n Usage: deadline <task> /by <by>");
         }
         LocalDate by = Task.parseDate(byStr);
         Deadline deadline = new Deadline(name, by);
@@ -104,8 +100,7 @@ public abstract class Task {
 
     private static Event parseEvent(String input) {
         if (input.isBlank()) {
-            System.out.println("you specified tasktype but there was no task T.T. You cheated on me!!!");
-            return null;
+            throw new SadStudentException("you specified tasktype but there was no task T.T. You cheated on me!!!");
         }
         String[] params = input.split(" /");
         String name = params[0];
@@ -120,8 +115,7 @@ public abstract class Task {
             }
         }
         if (toStr.isBlank() || fromStr.isBlank()) {
-            System.out.println("ehhh Event requires from and to field!\n Usage: event <task> /from <from> /to <to>");
-            return null;
+            throw new SadStudentException("ehhh Event requires from and to field!\n Usage: event <task> /from <from> /to <to>");
         }
         LocalDate to = Task.parseDate(toStr);
         LocalDate from = Task.parseDate(fromStr);

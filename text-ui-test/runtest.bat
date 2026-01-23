@@ -19,3 +19,4 @@ java -classpath ..\bin SadStudent < input.txt > ACTUAL.TXT
 
 REM compare the output to the expected output
 FC ACTUAL.TXT EXPECTED.TXT
+if exist tasks.txt del tasks.txt
