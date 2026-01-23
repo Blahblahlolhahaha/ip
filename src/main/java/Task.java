@@ -1,7 +1,14 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.HashSet;
+import java.util.List;
+
 public abstract class Task {
     private String name;
     private boolean mark = false;
-
+    private static String[] dateFormats = {"yyyy-MM-dd", "dd/MM/yyyy", "yyyy-MM-dd HHmm", "dd/MM/yyyy HHmm"};
+    private static HashSet<String> taskTypes = new HashSet<>(List.of("todo", "deadline", "event")); 
     public Task(String name) {
         this.name = name;
     }
@@ -27,16 +34,19 @@ public abstract class Task {
         return String.format("%s|%s", marked, name);
     }
 
-    public static Task parseSavedTask(String task) {
+    public static Task parseSavedTask(String task){
         String[] params = task.split("\\|");
         boolean mark = params[1].equals("X");
         switch (params[0]) {
             case "T":
                 return new ToDo(mark, params[2]);
             case "D":
-                return new Deadline(mark, params[2], params[3]);
+                LocalDate by = Task.parseDate(params[3]);
+                return new Deadline(mark, params[2], by);
             case "E":
-                return new Event(mark, params[2], params[3], params[4]);
+                LocalDate to = Task.parseDate(params[3]);
+                LocalDate from = Task.parseDate(params[4]);
+                return new Event(mark, params[2], from, to);
             default:
                 return null;
         }
@@ -44,9 +54,12 @@ public abstract class Task {
 
     public static Task parseTask(String input) {
         String taskType = input.split(" ")[0];
+        if(!Task.taskTypes.contains(taskType)) {
+            System.out.println("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
+            return null;
+        }
         String params = input.replaceFirst(taskType, "");
         params = params.strip();
-        
         switch (taskType) {
             case "todo":
                 return parseTodo(params);
@@ -54,10 +67,8 @@ public abstract class Task {
                 return parseDeadline(params);
             case "event":
                 return parseEvent(params); 
-            default:
-                System.out.println("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
-                return null;
         }
+        return null;
     }
     
     private static ToDo parseTodo(String input) {
@@ -76,16 +87,17 @@ public abstract class Task {
         }
         String[] params = input.split(" /");
         String name = params[0];
-        String by = "";
+        String byStr = "";
         for (int i = 1; i < params.length; i++) {
             if (params[i].startsWith("by ")) {
-                by = params[i].replaceFirst("by ", "");
+                byStr = params[i].replaceFirst("by ", "");
             }
         }
-        if (by.isBlank()) {
+        if (byStr.isBlank()) {
             System.out.println("ehhh Deadline requires by field!\n Usage: deadline <task> /by <by>");
             return null;
         }
+        LocalDate by = Task.parseDate(byStr);
         Deadline deadline = new Deadline(name, by);
         return deadline;
     }
@@ -97,22 +109,36 @@ public abstract class Task {
         }
         String[] params = input.split(" /");
         String name = params[0];
-        String from = "";
-        String to = "";
+        String fromStr = "";
+        String toStr = "";
         for (int i = 1; i < params.length; i++) {
             if (params[i].startsWith("from ")) {
-                from = params[i].replaceFirst("from ", "");
+                fromStr = params[i].replaceFirst("from ", "");
             }
             else if (params[i].startsWith("to ")) {
-                to = params[i].replaceFirst("to ", "");
+                toStr = params[i].replaceFirst("to ", "");
             }
         }
-        if (to.isBlank() || from.isBlank()) {
+        if (toStr.isBlank() || fromStr.isBlank()) {
             System.out.println("ehhh Event requires from and to field!\n Usage: event <task> /from <from> /to <to>");
             return null;
         }
+        LocalDate to = Task.parseDate(toStr);
+        LocalDate from = Task.parseDate(fromStr);
         Event event = new Event(name, from, to);
         return event;
+    }
+
+    private static LocalDate parseDate(String dateString) {
+        int index = 0 ;
+        while (index < dateFormats.length) {
+            try {
+                return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(dateFormats[index]));
+            } catch(DateTimeParseException e) {
+                index++;
+            }
+        }
+        throw new DateTimeParseException(dateString, dateString, 0);
     }
 
     @Override

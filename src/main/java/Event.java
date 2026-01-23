@@ -1,14 +1,19 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.text.DateFormatter;
+
 public class Event extends Task{
-    String from;
-    String to;
+    LocalDate from;
+    LocalDate to;
     
-    public Event(String name, String from, String to) {
+    public Event(String name, LocalDate from, LocalDate to) {
         super(name);
         this.from = from;
         this.to = to;
     }
 
-    public Event(boolean mark, String name, String from, String to) {
+    public Event(boolean mark, String name, LocalDate from, LocalDate to) {
         super(mark, name);
         this.from = from;
         this.to = to;
@@ -16,11 +21,15 @@ public class Event extends Task{
 
     @Override
     public String store() {
-        return String.format("E|%s|%s|%s", super.store(), from, to);
+        String fromStr = from.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String toStr = to.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return String.format("E|%s|%s|%s", super.store(), fromStr, toStr);
     }
 
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), from, to);
+        String fromStr = from.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String toStr = to.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return String.format("[E]%s (from: %s to: %s)", super.toString(), fromStr, toStr);
     }
 }
