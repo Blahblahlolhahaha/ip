@@ -1,3 +1,4 @@
+package sadstudent.exceptions;
 public class SadStudentException extends RuntimeException {
     private String message;
 

@@ -1,7 +1,6 @@
+package sadstudent.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import javax.swing.text.DateFormatter;
 
 public class Event extends Task{
     LocalDate from;

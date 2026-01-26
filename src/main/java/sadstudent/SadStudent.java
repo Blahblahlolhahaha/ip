@@ -1,6 +1,13 @@
+package sadstudent;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+import sadstudent.exceptions.SadStudentException;
+import sadstudent.parser.Parser;
+import sadstudent.storage.Storage;
+import sadstudent.task.TaskList;
+import sadstudent.ui.UI;
 
 public class SadStudent {
 

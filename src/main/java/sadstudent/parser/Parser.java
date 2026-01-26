@@ -1,3 +1,8 @@
+package sadstudent.parser;
+import sadstudent.exceptions.SadStudentException;
+import sadstudent.task.Task;
+import sadstudent.task.TaskList;
+
 public class Parser {
 
     public String parseCommand(String input, TaskList list) {

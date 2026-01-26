@@ -1,8 +1,12 @@
+package sadstudent.storage;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import sadstudent.task.Task;
+import sadstudent.task.TaskList;
 
 public class Storage {
     private File file = new File("./tasks.txt");
