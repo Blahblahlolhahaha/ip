@@ -132,6 +132,11 @@ public class TaskTest {
         assertEquals(parser.parseCommand("unmark 1", listtt),
                 String.format("Awwww please dont sike me :(\n%s", todo2.toString()));
 
+        TaskList searchList = new TaskList();
+        searchList.addTask(new ToDo("crying myself to sleep tonight"));
+        assertEquals(parser.parseCommand("find crying",listtt), String.format("tada! Here are the matches for \"crying\":\n%s", searchList.toString()));
+
+        assertEquals(parser.parseCommand("find die",listtt), "There are no matches for: die ;-;");
     }
 
 }

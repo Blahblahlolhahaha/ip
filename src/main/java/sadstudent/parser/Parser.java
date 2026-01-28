@@ -35,6 +35,13 @@ public class Parser {
             } else {
                 return String.format("%s\n%s", ending, res);
             }
+        } else if(input.startsWith("find ")) {
+            String search = input.replaceFirst("find ", "");
+            TaskList searchList = list.findTasks(search);
+            if(searchList.getNumberOfTasks() == 0) {
+                return String.format("There are no matches for: %s ;-;", search);
+            }
+            return String.format("tada! Here are the matches for \"%s\":\n%s", search, searchList.toString());
         } else {
             Task task = Task.parseTask(input);
             if (task != null) {
