@@ -15,7 +15,7 @@ public class Parser {
             int index = Integer.parseInt(input.split(" ")[1]) - 1;
             Task task = list.removeTask(index);
             if (task != null) {
-                return String.format("Task removed: %s\n Out of sight out of mind :D", task.toString());
+                return String.format("Task removed: %s\nOut of sight out of mind :D", task.toString());
             } else {
                 throw new SadStudentException("Nuuuu index out of range :(");
             }
