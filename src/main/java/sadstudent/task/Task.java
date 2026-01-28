@@ -94,7 +94,7 @@ public abstract class Task {
             }
         }
         if (byStr.isBlank()) {
-            throw new SadStudentException("ehhh Deadline requires by field!\n Usage: deadline <task> /by <by>");
+            throw new SadStudentException("ehhh Deadline requires by field!\nUsage: deadline <task> /by <by>");
         }
         LocalDate by = Task.parseDate(byStr);
         Deadline deadline = new Deadline(name, by);
@@ -118,7 +118,7 @@ public abstract class Task {
             }
         }
         if (toStr.isBlank() || fromStr.isBlank()) {
-            throw new SadStudentException("ehhh Event requires from and to field!\n Usage: event <task> /from <from> /to <to>");
+            throw new SadStudentException("ehhh Event requires from and to field!\nUsage: event <task> /from <from> /to <to>");
         }
         LocalDate to = Task.parseDate(toStr);
         LocalDate from = Task.parseDate(fromStr);
