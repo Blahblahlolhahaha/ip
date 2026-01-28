@@ -147,4 +147,12 @@ public abstract class Task {
         header += "]";
         return String.format("%s %s", header, name);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Task task) {
+            return this.mark == task.mark && this.name.equals(task.name);
+        }
+        return false;
+    }
 }

@@ -31,4 +31,12 @@ public class Event extends Task{
         String toStr = to.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return String.format("[E]%s (from: %s to: %s)", super.toString(), fromStr, toStr);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof Event event) {
+            return super.equals(event) && this.from.equals(event.from) && this.to.equals(event.to);
+        }
+        return false;
+    }
 }
