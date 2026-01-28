@@ -1,4 +1,5 @@
 package sadstudent.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -10,8 +11,9 @@ import sadstudent.exceptions.SadStudentException;
 public abstract class Task {
     private String name;
     private boolean mark = false;
-    private static String[] dateFormats = {"yyyy-MM-dd", "dd/MM/yyyy", "yyyy-MM-dd HHmm", "dd/MM/yyyy HHmm"};
-    private static HashSet<String> taskTypes = new HashSet<>(List.of("todo", "deadline", "event")); 
+    private static String[] dateFormats = { "yyyy-MM-dd", "dd/MM/yyyy", "yyyy-MM-dd HHmm", "dd/MM/yyyy HHmm" };
+    private static HashSet<String> taskTypes = new HashSet<>(List.of("todo", "deadline", "event"));
+
     public Task(String name) {
         this.name = name;
     }
@@ -29,15 +31,26 @@ public abstract class Task {
         this.mark = false;
     }
 
+    /**
+     * Converts the task into a String format to be stored in a file
+     * @return Converted task
+     */
     public String store() {
         String marked = "X";
-        if(!mark) {
+        if (!mark) {
             marked = " ";
         }
         return String.format("%s|%s", marked, name);
     }
 
-    public static Task parseSavedTask(String task){
+    /**
+     * Parses the task that is loaded from a file and returns a Task corresponding
+     * to the input provided
+     * 
+     * @param task input to be parsed
+     * @return The parsed task
+     */
+    public static Task parseSavedTask(String task) {
         String[] params = task.split("\\|");
         boolean mark = params[1].equals("X");
         switch (params[0]) {
@@ -53,12 +66,19 @@ public abstract class Task {
             default:
                 return null;
         }
-    } 
+    }
 
-    public static Task parseTask(String input) {
+    /**
+     * Parses the task to be created and returns it
+     * @param input The task to be parsed and created
+     * @return The parsed task
+     * @throws SadStudentException If the task type provided is not supported or the format provided is incorrect
+     */
+    public static Task parseTask(String input) throws SadStudentException{
         String taskType = input.split(" ")[0];
-        if(!Task.taskTypes.contains(taskType)) {
-            throw new SadStudentException("I cant support this task type now ;-; Please choose from (todo, deadline, event)");
+        if (!Task.taskTypes.contains(taskType)) {
+            throw new SadStudentException(
+                    "I cant support this task type now ;-; Please choose from (todo, deadline, event)");
         }
         String params = input.replaceFirst(taskType, "");
         params = params.strip();
@@ -68,11 +88,11 @@ public abstract class Task {
             case "deadline":
                 return parseDeadline(params);
             case "event":
-                return parseEvent(params); 
+                return parseEvent(params);
         }
         return null;
     }
-    
+
     private static ToDo parseTodo(String input) {
         if (input.isBlank()) {
             throw new SadStudentException("you specified tasktype but there was no task T.T. You cheated on me!!!");
@@ -112,13 +132,13 @@ public abstract class Task {
         for (int i = 1; i < params.length; i++) {
             if (params[i].startsWith("from ")) {
                 fromStr = params[i].replaceFirst("from ", "");
-            }
-            else if (params[i].startsWith("to ")) {
+            } else if (params[i].startsWith("to ")) {
                 toStr = params[i].replaceFirst("to ", "");
             }
         }
         if (toStr.isBlank() || fromStr.isBlank()) {
-            throw new SadStudentException("ehhh Event requires from and to field!\nUsage: event <task> /from <from> /to <to>");
+            throw new SadStudentException(
+                    "ehhh Event requires from and to field!\nUsage: event <task> /from <from> /to <to>");
         }
         LocalDate to = Task.parseDate(toStr);
         LocalDate from = Task.parseDate(fromStr);
@@ -127,11 +147,11 @@ public abstract class Task {
     }
 
     private static LocalDate parseDate(String dateString) {
-        int index = 0 ;
+        int index = 0;
         while (index < dateFormats.length) {
             try {
                 return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(dateFormats[index]));
-            } catch(DateTimeParseException e) {
+            } catch (DateTimeParseException e) {
                 index++;
             }
         }
@@ -150,7 +170,7 @@ public abstract class Task {
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Task task) {
+        if (other instanceof Task task) {
             return this.mark == task.mark && this.name.equals(task.name);
         }
         return false;
