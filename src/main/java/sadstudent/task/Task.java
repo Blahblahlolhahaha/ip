@@ -31,6 +31,10 @@ public abstract class Task {
         this.mark = false;
     }
 
+    /**
+     * Converts the task into a String format to be stored in a file
+     * @return Converted task
+     */
     public String store() {
         String marked = "X";
         if (!mark) {
@@ -39,6 +43,13 @@ public abstract class Task {
         return String.format("%s|%s", marked, name);
     }
 
+    /**
+     * Parses the task that is loaded from a file and returns a Task corresponding
+     * to the input provided
+     * 
+     * @param task input to be parsed
+     * @return The parsed task
+     */
     public static Task parseSavedTask(String task) {
         String[] params = task.split("\\|");
         boolean mark = params[1].equals("X");
@@ -57,7 +68,13 @@ public abstract class Task {
         }
     }
 
-    public static Task parseTask(String input) {
+    /**
+     * Parses the task to be created and returns it
+     * @param input The task to be parsed and created
+     * @return The parsed task
+     * @throws SadStudentException If the task type provided is not supported or the format provided is incorrect
+     */
+    public static Task parseTask(String input) throws SadStudentException{
         String taskType = input.split(" ")[0];
         if (!Task.taskTypes.contains(taskType)) {
             throw new SadStudentException(

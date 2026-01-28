@@ -6,7 +6,20 @@ import sadstudent.task.TaskList;
 
 public class Parser {
 
-    public String parseCommand(String input, TaskList list) {
+    /**
+     * Parses the command inputted by the user and performs the action based on the
+     * command on the TaskList provided
+     * Supported commands are ["list", "bye", "delete", "mark", "unmark"]
+     * If command is not in supported command list, a task will be added to TaskList
+     * provided instead
+     * Supported task types are ["deadline", "event", "todo"]
+     * 
+     * @param input User command to be parsed
+     * @param list  List of Tasks by the user
+     * @return Response of the bot
+     * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
+     */
+    public String parseCommand(String input, TaskList list) throws SadStudentException{
         if (input.equals("list")) {
             return list.toString();
         } else if (input.equals("bye")) {

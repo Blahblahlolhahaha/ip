@@ -13,6 +13,11 @@ public class TaskList {
         this.tasks.add(task);
     }
 
+    /**
+     * Marks the task at given index, returns empty string if index is out of range
+     * @param index
+     * @return String representation of the task that is marked
+     */
     public String mark(int index) {
         if (index >= tasks.size() || index < 0) {
             return "";
@@ -22,6 +27,11 @@ public class TaskList {
         return task.toString();
     }
 
+    /**
+     * Unmarks the task at given index, returns empty string if index is out of range
+     * @param index
+     * @return String representation of the task that is unmarked
+     */
     public String unmark(int index) {
         if (index >= tasks.size() || index < 0) {
             return "";
@@ -35,6 +45,11 @@ public class TaskList {
         return tasks.size();
     }
 
+    /**
+     * Removes the task at the given index and returns it
+     * @param index
+     * @return Task removed
+     */
     public Task removeTask(int index) {
         if (index >= tasks.size() || index < 0) {
             return null;
@@ -43,6 +58,10 @@ public class TaskList {
         return task;
     }
 
+    /**
+     * Converts all the tasks to a format to be stored in a file
+     * @return Storable String format of all tasks stored in the list, separated by \n
+     */
     public String storeString() {
         StringBuffer sb = new StringBuffer();
         for (Task task : tasks) {

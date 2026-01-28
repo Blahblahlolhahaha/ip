@@ -33,6 +33,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Stores the tasklist in a file
+     * @param taskList List to be stored
+     * @throws IOException if I/O error occurs while saving the list
+     */
     public void storeFile(TaskList taskList) throws IOException {
         String res = taskList.storeString();
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
