@@ -1,11 +1,12 @@
 package sadstudent.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Event extends Task{
+public class Event extends Task {
     LocalDate from;
     LocalDate to;
-    
+
     public Event(String name, LocalDate from, LocalDate to) {
         super(name);
         this.from = from;
@@ -34,7 +35,7 @@ public class Event extends Task{
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Event event) {
+        if (other instanceof Event event) {
             return super.equals(event) && this.from.equals(event.from) && this.to.equals(event.to);
         }
         return false;

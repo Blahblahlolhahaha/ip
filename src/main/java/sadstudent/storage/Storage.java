@@ -1,4 +1,5 @@
 package sadstudent.storage;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -12,22 +13,22 @@ public class Storage {
     private File file = new File("./tasks.txt");
 
     public TaskList loadFile() {
-        try{
-            if(!file.exists()){
+        try {
+            if (!file.exists()) {
                 file.createNewFile();
             }
             Scanner scanner = new Scanner(file);
             TaskList taskList = new TaskList();
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 String taskLine = scanner.nextLine();
                 Task task = Task.parseSavedTask(taskLine);
-                if(task != null) {
+                if (task != null) {
                     taskList.addTask(task);
                 }
             }
             scanner.close();
             return taskList;
-        } catch(IOException e) {
+        } catch (IOException e) {
             return null;
         }
     }
@@ -37,5 +38,5 @@ public class Storage {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         bw.write(res);
         bw.close();
-    } 
+    }
 }

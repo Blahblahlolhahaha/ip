@@ -1,8 +1,9 @@
 package sadstudent.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Deadline extends Task{
+public class Deadline extends Task {
     LocalDate deadline;
 
     public Deadline(String name, LocalDate deadline) {
@@ -26,10 +27,10 @@ public class Deadline extends Task{
         String deadlineStr = deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         return String.format("[D]%s (by: %s)", super.toString(), deadlineStr);
     }
-    
+
     @Override
     public boolean equals(Object other) {
-        if(other instanceof Deadline othrDeadline) {
+        if (other instanceof Deadline othrDeadline) {
             return super.equals(othrDeadline) && this.deadline.equals(othrDeadline.deadline);
         }
         return false;

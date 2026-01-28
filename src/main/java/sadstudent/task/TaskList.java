@@ -1,4 +1,5 @@
 package sadstudent.task;
+
 import java.util.ArrayList;
 
 public class TaskList {
@@ -44,7 +45,7 @@ public class TaskList {
 
     public String storeString() {
         StringBuffer sb = new StringBuffer();
-        for(Task task : tasks) {
+        for (Task task : tasks) {
             sb.append(task.store() + "\n");
         }
         return sb.toString();

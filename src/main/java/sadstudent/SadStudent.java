@@ -1,4 +1,5 @@
 package sadstudent;
+
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
@@ -30,7 +31,7 @@ public class SadStudent {
             try {
                 String input = ui.getInput();
                 String res = parser.parseCommand(input, list);
-                if(res.isBlank()) {
+                if (res.isBlank()) {
                     ui.showMessage("Alright I go and cry myself to sleep T.T");
                     break;
                 }
