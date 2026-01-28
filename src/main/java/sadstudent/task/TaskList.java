@@ -50,6 +50,16 @@ public class TaskList {
         return sb.toString();
     }
 
+    public TaskList findTasks(String str) {
+        TaskList res = new TaskList();
+        for(Task x : this.tasks) {
+            if(x.nameMatch(str)) {
+                res.addTask(x);
+            }
+        }
+        return res;
+    }
+
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();

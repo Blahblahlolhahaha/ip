@@ -138,6 +138,10 @@ public abstract class Task {
         throw new DateTimeParseException(dateString, dateString, 0);
     }
 
+    public boolean nameMatch(String str) {
+        return this.name.contains(str);
+    }
+
     @Override
     public String toString() {
         String header = "[";
