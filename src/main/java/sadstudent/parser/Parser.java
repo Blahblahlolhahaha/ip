@@ -41,7 +41,7 @@ public class Parser {
                 return String.format("added: %s\nYou have %d tasks now!", task.toString(),
                         list.getNumberOfTasks());
             }
-            throw new SadStudentException("An error occuered parsing the input ;-;");
+            throw new SadStudentException("An error occured parsing the input ;-;");
         }
     }
 }
