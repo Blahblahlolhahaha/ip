@@ -19,7 +19,7 @@ public class Parser {
      * @return Response of the bot
      * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
      */
-    public String parseCommand(String input, TaskList list) throws SadStudentException{
+    public static String parseCommand(String input, TaskList list) throws SadStudentException{
         if (input.equals("list")) {
             return list.toString();
         } else if (input.equals("bye")) {

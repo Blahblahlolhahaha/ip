@@ -12,11 +12,9 @@ import sadstudent.ui.UI;
 public class SadStudent {
 
     private UI ui;
-    private Parser parser;
 
     public SadStudent() {
         this.ui = new UI();
-        this.parser = new Parser();
     }
 
     public void run() {
@@ -30,7 +28,7 @@ public class SadStudent {
         while (true) {
             try {
                 String input = ui.getInput();
-                String res = parser.parseCommand(input, list);
+                String res = Parser.parseCommand(input, list);
                 if (res.isBlank()) {
                     ui.showMessage("Alright I go and cry myself to sleep T.T");
                     break;
