@@ -75,6 +75,9 @@ public abstract class Task {
      * @throws SadStudentException If the task type provided is not supported or the format provided is incorrect
      */
     public static Task parseTask(String input) throws SadStudentException{
+        if(input.contains("|")) {
+            throw new SadStudentException("| is not allowed");
+        }
         String taskType = input.split(" ")[0];
         if (!Task.taskTypes.contains(taskType)) {
             throw new SadStudentException(

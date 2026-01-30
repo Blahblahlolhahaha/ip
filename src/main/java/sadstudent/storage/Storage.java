@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import sadstudent.exceptions.SadStudentException;
 import sadstudent.task.Task;
 import sadstudent.task.TaskList;
 
@@ -24,6 +25,9 @@ public class Storage {
                 Task task = Task.parseSavedTask(taskLine);
                 if (task != null) {
                     taskList.addTask(task);
+                }
+                else {
+                    throw new SadStudentException("Save file is corrupted!");
                 }
             }
             scanner.close();
