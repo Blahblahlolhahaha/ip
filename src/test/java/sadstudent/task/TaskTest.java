@@ -2,7 +2,6 @@ package sadstudent.task;
 
 import org.junit.jupiter.api.Test;
 import sadstudent.exceptions.SadStudentException;
-import sadstudent.parser.Parser;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

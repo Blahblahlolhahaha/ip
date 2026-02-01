@@ -48,14 +48,13 @@ public class ParserTest {
     }
 
     @Test
-    public void parseMarkCommand_indexOutOfRange_exceptionThrown() {  
+    public void parseMarkCommand_indexOutOfRange_exceptionThrown() {
         TaskList listt = new TaskList();
         listt.addTask(new Deadline("finish assignment",
                 LocalDate.parse("2026-02-16")));
         listt.addTask(new Event("see fren", LocalDate.parse("2026-02-12"),
                 LocalDate.parse("2026-02-13")));
         listt.addTask(new ToDo("crying myself to sleep tonight"));
-        ToDo todo = new ToDo("crying myself to sleep tonight");
         SadStudentException sad = assertThrows(SadStudentException.class, () -> {
             Parser.parseCommand("unmark 4", listt);
         });
@@ -70,7 +69,7 @@ public class ParserTest {
     public void parseFindCommand_haveResults_success() {
         TaskList searchList = new TaskList();
         searchList.addTask(new ToDo("crying myself to sleep tonight"));
-        assertEquals(Parser.parseCommand("find crying", 
+        assertEquals(Parser.parseCommand("find crying",
                 searchList),
                 String.format("tada! Here are the matches for \"crying\":\n%s", searchList.toString()));
     }
