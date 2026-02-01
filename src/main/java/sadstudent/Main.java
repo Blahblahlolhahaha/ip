@@ -1,5 +1,6 @@
 package sadstudent;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +27,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         // Setting up required components
-
         scrollPane = new ScrollPane();
         dialogContainer = new VBox();
         scrollPane.setContent(dialogContainer);
@@ -71,18 +71,36 @@ public class Main extends Application {
         AnchorPane.setBottomAnchor(userInput, 1.0);
 
         sendButton.setOnMouseClicked((event) -> {
-            handleUserInput();
+            try {
+                handleUserInput();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         });
         userInput.setOnAction((event) -> {
-            handleUserInput();
+            try {
+                handleUserInput();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         });
         dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+        // String greeting = baos.toString();
+        // dialogContainer.getChildren().add(new DialogBox(greeting, dukeImage));
 
         // More code to be added here later
     }
 
-    private void handleUserInput() {
-        dialogContainer.getChildren().addAll(new DialogBox(userInput.getText(), userImage));
+    private void handleUserInput() throws IOException {
+        String input = userInput.getText();
+        String response = sadStudent.getResponse(input);
+        dialogContainer.getChildren().addAll(new DialogBox(input, userImage), new DialogBox(response, dukeImage));
         userInput.clear();
+        if(input.equals("bye")) {
+            System.exit(0);
+        }
     }
+
 }
