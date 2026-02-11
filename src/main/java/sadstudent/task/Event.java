@@ -9,12 +9,18 @@ public class Event extends Task {
 
     public Event(String name, LocalDate from, LocalDate to) {
         super(name);
+        assert name != null : "Event name cannot be null";
+        assert from != null : "Event from date cannot be null";
+        assert to != null : "Event to date cannot be null";
         this.from = from;
         this.to = to;
     }
 
     public Event(boolean mark, String name, LocalDate from, LocalDate to) {
         super(mark, name);
+        assert name != null : "Event name cannot be null";
+        assert from != null : "Event from date cannot be null";
+        assert to != null : "Event to date cannot be null";
         this.from = from;
         this.to = to;
     }

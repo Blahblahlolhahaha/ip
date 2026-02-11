@@ -19,7 +19,10 @@ public class Parser {
      * @return Response of the bot
      * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
      */
-    public static String parseCommand(String input, TaskList list) throws SadStudentException{
+    public static String parseCommand(String input, TaskList list) throws SadStudentException {
+        assert input != null : "Input cannot be null";
+        assert list != null : "TaskList cannot be null";
+        assert !input.isBlank() : "Input cannot be blank";
         String[] params = input.split(" ");
         switch(params[0]) {
         case "list":
@@ -61,13 +64,16 @@ public class Parser {
         if (res == "") {
             throw new SadStudentException("Nuuuu index out of range :(");
         } else {
+            assert !res.isBlank() : "Mark/unmark result should not be blank";
             return String.format("%s\n%s", ending, res);
         }
     }
 
     private static String findTask(String input, TaskList list) {
         String search = input.replaceFirst("find ", "");
+        assert !search.isBlank() : "Search query should not be blank";
         TaskList searchList = list.findTasks(search);
+        assert searchList != null : "Search result list cannot be null";
         if (searchList.getNumberOfTasks() == 0) {
             return String.format("There are no matches for: %s ;-;", search);
         }
