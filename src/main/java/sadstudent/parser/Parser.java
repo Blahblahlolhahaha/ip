@@ -17,14 +17,15 @@ public class Parser {
      * @param input User command to be parsed
      * @param list  List of Tasks by the user
      * @return Response of the bot
-     * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
+     * @throws SadStudentException when: index provided for delete/mark/unmark is
+     *                             out of range or command is unsupported
      */
     public static String parseCommand(String input, TaskList list) throws SadStudentException {
         assert input != null : "Input cannot be null";
         assert list != null : "TaskList cannot be null";
         assert !input.isBlank() : "Input cannot be blank";
         String[] params = input.split(" ");
-        switch(params[0]) {
+        switch (params[0]) {
         case "list":
             return list.toString();
         case "bye":

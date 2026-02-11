@@ -35,6 +35,7 @@ public abstract class Task {
 
     /**
      * Converts the task into a String format to be stored in a file
+     * 
      * @return Converted task
      */
     public String store() {
@@ -83,12 +84,14 @@ public abstract class Task {
 
     /**
      * Parses the task to be created and returns it
+     * 
      * @param input The task to be parsed and created
      * @return The parsed task
-     * @throws SadStudentException If the task type provided is not supported or the format provided is incorrect
+     * @throws SadStudentException If the task type provided is not supported or the
+     *                             format provided is incorrect
      */
-    public static Task parseTask(String input) throws SadStudentException{
-        if(input.contains("|")) {
+    public static Task parseTask(String input) throws SadStudentException {
+        if (input.contains("|")) {
             throw new SadStudentException("| is not allowed");
         }
         String taskType = input.split(" ")[0];

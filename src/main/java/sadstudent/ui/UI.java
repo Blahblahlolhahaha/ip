@@ -12,6 +12,7 @@ public class UI {
 
     /**
      * Displays message to console
+     * 
      * @param output Message to be displayed
      */
     public void showMessage(String output) {
@@ -47,6 +48,7 @@ public class UI {
 
     /**
      * Gets an input line from user and returns it
+     * 
      * @return The line inputted by the user
      */
     public String getInput() {
