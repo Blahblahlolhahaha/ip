@@ -15,10 +15,12 @@ public abstract class Task {
     private static HashSet<String> taskTypes = new HashSet<>(List.of("todo", "deadline", "event"));
 
     public Task(String name) {
+        assert name != null : "Task name cannot be null";
         this.name = name;
     }
 
     public Task(boolean mark, String name) {
+        assert name != null : "Task name cannot be null";
         this.name = name;
         this.mark = mark;
     }
@@ -51,21 +53,32 @@ public abstract class Task {
      * @return The parsed task
      */
     public static Task parseSavedTask(String task) {
+        assert task != null : "Task string cannot be null";
         String[] params = task.split("\\|");
+        assert params.length >= 3 : "Invalid task format: must have at least 3 parts";
         boolean mark = params[1].equals("X");
+        Task result = null;
         switch (params[0]) {
             case "T":
-                return new ToDo(mark, params[2]);
+                result = new ToDo(mark, params[2]);
+                break;
             case "D":
+                assert params.length >= 4 : "Deadline task must have 4 parts";
                 LocalDate by = Task.parseDate(params[3]);
-                return new Deadline(mark, params[2], by);
+                assert by != null : "Parsed deadline date cannot be null";
+                result = new Deadline(mark, params[2], by);
+                break;
             case "E":
+                assert params.length >= 5 : "Event task must have 5 parts";
                 LocalDate to = Task.parseDate(params[3]);
                 LocalDate from = Task.parseDate(params[4]);
-                return new Event(mark, params[2], from, to);
+                assert to != null && from != null : "Parsed event dates cannot be null";
+                result = new Event(mark, params[2], from, to);
+                break;
             default:
                 return null;
         }
+        return result;
     }
 
     /**
