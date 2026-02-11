@@ -76,7 +76,7 @@ public abstract class Task {
                 result = new Event(mark, params[2], from, to);
                 break;
             default:
-                return null;
+                throw new SadStudentException("Save file is corrupted!");
         }
         return result;
     }
