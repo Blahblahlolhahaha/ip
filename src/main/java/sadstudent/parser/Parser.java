@@ -19,62 +19,74 @@ public class Parser {
      * @return Response of the bot
      * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
      */
-    public static String parseCommand(String input, TaskList list) throws SadStudentException{
+    public static String parseCommand(String input, TaskList list) throws SadStudentException {
         assert input != null : "Input cannot be null";
         assert list != null : "TaskList cannot be null";
         assert !input.isBlank() : "Input cannot be blank";
-        
-        if (input.equals("list")) {
-            String result = list.toString();
-            assert result != null : "List string representation cannot be null";
-            return result;
-        } else if (input.equals("bye")) {
-            // ui.showMessage("Alright I go and cry myself to sleep T.T");
+        String[] params = input.split(" ");
+        switch(params[0]) {
+        case "list":
+            return list.toString();
+        case "bye":
             return "";
-        } else if (input.startsWith("delete")) {
-            int index = Integer.parseInt(input.split(" ")[1]) - 1;
-            Task task = list.removeTask(index);
-            if (task != null) {
-                return String.format("Task removed: %s\nOut of sight out of mind :D", task.toString());
-            } else {
-                throw new SadStudentException("Nuuuu index out of range :(");
-            }
-        } else if (input.startsWith("mark ") || input.startsWith("unmark ")) {
-            int index = Integer.parseInt(input.split(" ")[1]) - 1;
-            String ending = "Yay, one task closer to sleeping! :D";
-            String res = "";
-            if (input.startsWith("un")) {
-                ending = "Awwww please dont sike me :(";
-                res = list.unmark(index);
-            } else {
-                res = list.mark(index);
-            }
-            if (res == "") {
-                throw new SadStudentException("Nuuuu index out of range :(");
-            } else {
-                assert !res.isBlank() : "Mark/unmark result should not be blank";
-                return String.format("%s\n%s", ending, res);
-            }
-        } else if(input.startsWith("find ")) {
-            String search = input.replaceFirst("find ", "");
-            assert !search.isBlank() : "Search query should not be blank";
-            TaskList searchList = list.findTasks(search);
-            assert searchList != null : "Search result list cannot be null";
-            if(searchList.getNumberOfTasks() == 0) {
-                return String.format("There are no matches for: %s ;-;", search);
-            }
-            String result = String.format("tada! Here are the matches for \"%s\":\n%s", search, searchList.toString());
-            assert result != null : "Result string cannot be null";
-            return result;
-        } else {
-            Task task = Task.parseTask(input);
-            if (task != null) {
-                list.addTask(task);
-                assert list.getNumberOfTasks() > 0 : "Task list should not be empty after adding";
-                return String.format("added: %s\nYou have %d tasks now!", task.toString(),
-                        list.getNumberOfTasks());
-            }
-            throw new SadStudentException("An error occured parsing the input ;-;");
+        case "delete":
+            return deleteTask(params, list);
+        case "mark":
+        case "unmark":
+            return markTask(params, list);
+        case "find":
+            return findTask(input, list);
+        default:
+            return addTask(input, list);
         }
+    }
+
+    private static String deleteTask(String[] params, TaskList list) {
+        int index = Integer.parseInt(params[1]) - 1;
+        Task task = list.removeTask(index);
+        if (task != null) {
+            return String.format("Task removed: %s\nOut of sight out of mind :D", task.toString());
+        } else {
+            throw new SadStudentException("Nuuuu index out of range :(");
+        }
+    }
+
+    private static String markTask(String[] params, TaskList list) {
+        int index = Integer.parseInt(params[1]) - 1;
+        String ending = "Yay, one task closer to sleeping! :D";
+        String res = "";
+        if (params[0].startsWith("un")) {
+            ending = "Awwww please dont sike me :(";
+            res = list.unmark(index);
+        } else {
+            res = list.mark(index);
+        }
+        if (res == "") {
+            throw new SadStudentException("Nuuuu index out of range :(");
+        } else {
+            assert !res.isBlank() : "Mark/unmark result should not be blank";
+            return String.format("%s\n%s", ending, res);
+        }
+    }
+
+    private static String findTask(String input, TaskList list) {
+        String search = input.replaceFirst("find ", "");
+        assert !search.isBlank() : "Search query should not be blank";
+        TaskList searchList = list.findTasks(search);
+        assert searchList != null : "Search result list cannot be null";
+        if (searchList.getNumberOfTasks() == 0) {
+            return String.format("There are no matches for: %s ;-;", search);
+        }
+        return String.format("tada! Here are the matches for \"%s\":\n%s", search, searchList.toString());
+    }
+
+    private static String addTask(String input, TaskList list) {
+        Task task = Task.parseTask(input);
+        if (task != null) {
+            list.addTask(task);
+            return String.format("added: %s\nYou have %d tasks now!", task.toString(),
+                    list.getNumberOfTasks());
+        }
+        throw new SadStudentException("An error occured parsing the input ;-;");
     }
 }
