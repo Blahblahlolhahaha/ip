@@ -37,6 +37,8 @@ public class Parser {
             return markTask(params, list);
         case "find":
             return findTask(input, list);
+        case "priority":
+            return setPriority(params, list);
         default:
             return addTask(input, list);
         }
@@ -90,4 +92,22 @@ public class Parser {
         }
         throw new SadStudentException("An error occured parsing the input ;-;");
     }
+
+    private static String setPriority(String[] params, TaskList list) {
+        try {
+            if(params.length < 3) {
+                throw new SadStudentException("Please enter a valid task/priority! (They should be numeric!)");
+            }
+            int index = Integer.parseInt(params[1]) - 1;
+            int priority = Integer.parseInt(params[2]);
+            String res = list.setPriority(index, priority);
+            if (res == "") {
+                throw new SadStudentException("Nuuuu index out of range :(");
+            }
+            assert !res.isBlank() : "Set priority result should not be blank";
+            return String.format("OMG you are prioritising tasks :0. Task changed: %s", res);
+        } catch(NumberFormatException e) {
+            throw new SadStudentException("Please enter a valid task/priority! (They should be numeric!)");
+        }
+    } 
 }

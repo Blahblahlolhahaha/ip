@@ -27,8 +27,8 @@ public class TaskList {
             return "";
         }
         Task task = this.tasks.get(index);
-        task.mark();
         assert task != null : "Task should not be null after retrieval";
+        task.mark();
         return task.toString();
     }
 
@@ -45,9 +45,21 @@ public class TaskList {
             return "";
         }
         Task task = this.tasks.get(index);
-        task.unmark();
         assert task != null : "Task should not be null after retrieval";
+        task.unmark();
         return task.toString();
+    }
+
+    public String setPriority(int index, int priority) {
+        assert index >= -1 : "Index should be non-negative";
+        if (index >= tasks.size() || index < 0) {
+            return "";
+        }
+        Task task = this.tasks.get(index);
+        assert task != null : "Task should not be null after retrieval";
+        int old = task.setPriority(priority);
+        return String.format("%s (was: %d)", task.toString(), old);
+
     }
 
     public int getNumberOfTasks() {
