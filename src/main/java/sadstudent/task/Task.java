@@ -64,7 +64,7 @@ public abstract class Task {
                 LocalDate from = Task.parseDate(params[4]);
                 return new Event(mark, params[2], from, to);
             default:
-                return null;
+                throw new SadStudentException("Save file is corrupted!");
         }
     }
 
