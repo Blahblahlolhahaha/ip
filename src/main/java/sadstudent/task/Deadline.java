@@ -8,11 +8,15 @@ public class Deadline extends Task {
 
     public Deadline(String name, LocalDate deadline) {
         super(name);
+        assert name != null : "Deadline name cannot be null";
+        assert deadline != null : "Deadline date cannot be null";
         this.deadline = deadline;
     }
 
     public Deadline(boolean mark, String name, LocalDate deadline) {
         super(mark, name);
+        assert name != null : "Deadline name cannot be null";
+        assert deadline != null : "Deadline date cannot be null";
         this.deadline = deadline;
     }
 

@@ -20,8 +20,14 @@ public class Parser {
      * @throws SadStudentException when: index provided for delete/mark/unmark is out of range or command is unsupported
      */
     public static String parseCommand(String input, TaskList list) throws SadStudentException{
+        assert input != null : "Input cannot be null";
+        assert list != null : "TaskList cannot be null";
+        assert !input.isBlank() : "Input cannot be blank";
+        
         if (input.equals("list")) {
-            return list.toString();
+            String result = list.toString();
+            assert result != null : "List string representation cannot be null";
+            return result;
         } else if (input.equals("bye")) {
             // ui.showMessage("Alright I go and cry myself to sleep T.T");
             return "";
@@ -46,19 +52,25 @@ public class Parser {
             if (res == "") {
                 throw new SadStudentException("Nuuuu index out of range :(");
             } else {
+                assert !res.isBlank() : "Mark/unmark result should not be blank";
                 return String.format("%s\n%s", ending, res);
             }
         } else if(input.startsWith("find ")) {
             String search = input.replaceFirst("find ", "");
+            assert !search.isBlank() : "Search query should not be blank";
             TaskList searchList = list.findTasks(search);
+            assert searchList != null : "Search result list cannot be null";
             if(searchList.getNumberOfTasks() == 0) {
                 return String.format("There are no matches for: %s ;-;", search);
             }
-            return String.format("tada! Here are the matches for \"%s\":\n%s", search, searchList.toString());
+            String result = String.format("tada! Here are the matches for \"%s\":\n%s", search, searchList.toString());
+            assert result != null : "Result string cannot be null";
+            return result;
         } else {
             Task task = Task.parseTask(input);
             if (task != null) {
                 list.addTask(task);
+                assert list.getNumberOfTasks() > 0 : "Task list should not be empty after adding";
                 return String.format("added: %s\nYou have %d tasks now!", task.toString(),
                         list.getNumberOfTasks());
             }

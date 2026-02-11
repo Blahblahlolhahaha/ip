@@ -1,3 +1,7 @@
+T|X|sad
+T| |crying myself to sleep tonight
+D|X|finish assignment|16/02/2026
+E| |see fren|12/02/2026|13/02/2026
 T|X|crying myself to sleep tonight
 D| |finish assignment|16/02/2026
 E| |play game|14/02/2026|16/02/2026

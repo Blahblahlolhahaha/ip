@@ -15,6 +15,7 @@ public class UI {
      * @param output Message to be displayed
      */
     public void showMessage(String output) {
+        assert output != null : "Output message cannot be null";
         System.out.println(output);
     }
 
@@ -50,6 +51,7 @@ public class UI {
      */
     public String getInput() {
         String input = scanner.nextLine().strip();
+        assert input != null : "Input cannot be null after stripping";
         return input;
     }
 

@@ -42,10 +42,12 @@ public class Storage {
      * @throws IOException if I/O error occurs while saving the list
      */
     public void storeFile(TaskList taskList) throws IOException {
+        assert taskList != null : "TaskList cannot be null";
         String res = taskList.storeString();
         File file = path.toFile();
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         bw.write(res);
         bw.close();
+        assert file.exists() : "File should exist after writing";
     }
 }

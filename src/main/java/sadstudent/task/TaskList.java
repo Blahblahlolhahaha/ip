@@ -10,7 +10,9 @@ public class TaskList {
     }
 
     public void addTask(Task task) {
+        assert task != null : "Cannot add null task to list";
         this.tasks.add(task);
+        assert this.tasks.contains(task) : "Task was not added to list";
     }
 
     /**
@@ -19,11 +21,13 @@ public class TaskList {
      * @return String representation of the task that is marked
      */
     public String mark(int index) {
+        assert index >= -1 : "Index should be non-negative";
         if (index >= tasks.size() || index < 0) {
             return "";
         }
         Task task = this.tasks.get(index);
         task.mark();
+        assert task != null : "Task should not be null after retrieval";
         return task.toString();
     }
 
@@ -31,13 +35,15 @@ public class TaskList {
      * Unmarks the task at given index, returns empty string if index is out of range
      * @param index
      * @return String representation of the task that is unmarked
-     */
+     */ 
     public String unmark(int index) {
+        assert index >= -1 : "Index should be non-negative";
         if (index >= tasks.size() || index < 0) {
             return "";
         }
         Task task = this.tasks.get(index);
         task.unmark();
+        assert task != null : "Task should not be null after retrieval";
         return task.toString();
     }
 

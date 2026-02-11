@@ -4,10 +4,12 @@ public class ToDo extends Task {
 
     public ToDo(String name) {
         super(name);
+        assert name != null : "ToDo name cannot be null";
     }
 
     public ToDo(boolean mark, String name) {
         super(mark, name);
+        assert name != null : "ToDo name cannot be null";
     }
 
     @Override
