@@ -13,8 +13,8 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
-    public Deadline(boolean mark, String name, LocalDate deadline) {
-        super(mark, name);
+    public Deadline(boolean mark, String name, LocalDate deadline, int priority) {
+        super(mark, name, priority);
         assert name != null : "Deadline name cannot be null";
         assert deadline != null : "Deadline date cannot be null";
         this.deadline = deadline;
@@ -29,7 +29,7 @@ public class Deadline extends Task {
     @Override
     public String toString() {
         String deadlineStr = deadline.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return String.format("[D]%s (by: %s)", super.toString(), deadlineStr);
+        return String.format("[D] %s (by: %s)", super.toString(), deadlineStr);
     }
 
     @Override

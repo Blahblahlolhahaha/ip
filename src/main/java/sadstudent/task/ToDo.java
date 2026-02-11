@@ -7,8 +7,8 @@ public class ToDo extends Task {
         assert name != null : "ToDo name cannot be null";
     }
 
-    public ToDo(boolean mark, String name) {
-        super(mark, name);
+    public ToDo(boolean mark, String name, int priority) {
+        super(mark, name, priority);
         assert name != null : "ToDo name cannot be null";
     }
 
@@ -19,6 +19,6 @@ public class ToDo extends Task {
 
     @Override
     public String toString() {
-        return String.format("[T]%s", super.toString());
+        return String.format("[T] %s", super.toString());
     }
 }

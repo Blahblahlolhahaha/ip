@@ -16,8 +16,8 @@ public class Event extends Task {
         this.to = to;
     }
 
-    public Event(boolean mark, String name, LocalDate from, LocalDate to) {
-        super(mark, name);
+    public Event(boolean mark, String name, LocalDate from, LocalDate to, int priority) {
+        super(mark, name, priority);
         assert name != null : "Event name cannot be null";
         assert from != null : "Event from date cannot be null";
         assert to != null : "Event to date cannot be null";
@@ -36,7 +36,7 @@ public class Event extends Task {
     public String toString() {
         String fromStr = from.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         String toStr = to.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        return String.format("[E]%s (from: %s to: %s)", super.toString(), fromStr, toStr);
+        return String.format("[E] %s (from: %s to: %s)", super.toString(), fromStr, toStr);
     }
 
     @Override

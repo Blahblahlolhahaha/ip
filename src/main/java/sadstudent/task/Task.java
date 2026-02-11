@@ -11,18 +11,21 @@ import sadstudent.exceptions.SadStudentException;
 public abstract class Task {
     private String name;
     private boolean mark = false;
+    private int priority;
     private static String[] dateFormats = { "yyyy-MM-dd", "dd/MM/yyyy", "yyyy-MM-dd HHmm", "dd/MM/yyyy HHmm" };
     private static HashSet<String> taskTypes = new HashSet<>(List.of("todo", "deadline", "event"));
 
     public Task(String name) {
         assert name != null : "Task name cannot be null";
         this.name = name;
+        this.priority = 0;
     }
 
-    public Task(boolean mark, String name) {
+    public Task(boolean mark, String name, int priority) {
         assert name != null : "Task name cannot be null";
         this.name = name;
         this.mark = mark;
+        this.priority = priority;
     }
 
     public void mark() {
@@ -43,7 +46,35 @@ public abstract class Task {
         if (!mark) {
             marked = " ";
         }
-        return String.format("%s|%s", marked, name);
+        return String.format("%s|%s|%d", marked, name, priority);
+    }
+
+    public boolean nameMatch(String str) {
+        return this.name.contains(str);
+    }
+
+    public int setPriority(int priority) {
+        int old = this.priority;
+        this.priority = priority;
+        return old;
+    }
+
+    @Override
+    public String toString() {
+        String header = "[";
+        if (mark) {
+            header += "X";
+        }
+        header += "]";
+        return String.format("[P:%d] %s %s", priority, header, name);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Task task) {
+            return this.mark == task.mark && this.name.equals(task.name);
+        }
+        return false;
     }
 
     /**
@@ -54,32 +85,38 @@ public abstract class Task {
      * @return The parsed task
      */
     public static Task parseSavedTask(String task) {
-        assert task != null : "Task string cannot be null";
-        String[] params = task.split("\\|");
-        assert params.length >= 3 : "Invalid task format: must have at least 3 parts";
-        boolean mark = params[1].equals("X");
-        Task result = null;
-        switch (params[0]) {
+        try {
+            assert task != null : "Task string cannot be null";
+            String[] params = task.split("\\|");
+            assert params.length >= 3 : "Invalid task format: must have at least 3 parts";
+            boolean mark = params[1].equals("X");
+            int priority = Integer.parseInt(params[3]);
+            Task result = null;
+            switch (params[0]) {
             case "T":
-                result = new ToDo(mark, params[2]);
+                result = new ToDo(mark, params[2], priority);
                 break;
             case "D":
                 assert params.length >= 4 : "Deadline task must have 4 parts";
-                LocalDate by = Task.parseDate(params[3]);
+                LocalDate by = Task.parseDate(params[4]);
                 assert by != null : "Parsed deadline date cannot be null";
-                result = new Deadline(mark, params[2], by);
+                result = new Deadline(mark, params[2], by, priority);
                 break;
             case "E":
                 assert params.length >= 5 : "Event task must have 5 parts";
-                LocalDate to = Task.parseDate(params[3]);
-                LocalDate from = Task.parseDate(params[4]);
+                LocalDate to = Task.parseDate(params[4]);
+                LocalDate from = Task.parseDate(params[5]);
                 assert to != null && from != null : "Parsed event dates cannot be null";
-                result = new Event(mark, params[2], from, to);
+                result = new Event(mark, params[2], from, to, priority);
                 break;
             default:
                 throw new SadStudentException("Save file is corrupted!");
+            }
+            return result;
+        }catch(NumberFormatException e) {
+            throw new SadStudentException("An error occured parsing the save file");
         }
-        return result;
+        
     }
 
     /**
@@ -102,12 +139,12 @@ public abstract class Task {
         String params = input.replaceFirst(taskType, "");
         params = params.strip();
         switch (taskType) {
-            case "todo":
-                return parseTodo(params);
-            case "deadline":
-                return parseDeadline(params);
-            case "event":
-                return parseEvent(params);
+        case "todo":
+            return parseTodo(params);
+        case "deadline":
+            return parseDeadline(params);
+        case "event":
+            return parseEvent(params);
         }
         return null;
     }
@@ -175,27 +212,5 @@ public abstract class Task {
             }
         }
         throw new DateTimeParseException(dateString, dateString, 0);
-    }
-
-    public boolean nameMatch(String str) {
-        return this.name.contains(str);
-    }
-
-    @Override
-    public String toString() {
-        String header = "[";
-        if (mark) {
-            header += "X";
-        }
-        header += "]";
-        return String.format("%s %s", header, name);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof Task task) {
-            return this.mark == task.mark && this.name.equals(task.name);
-        }
-        return false;
     }
 }
