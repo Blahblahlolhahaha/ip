@@ -19,3 +19,10 @@ I don't want the view to be horizontally scrollable, ideally the view should be 
 This allowed Copilot to make changes to the UI and bound widths to make the view fit within the constraints without the need to scroll horizontally
 
 
+## A-UserGuide
+
+Also used Copilot to generate user guide for my tool
+
+prompt: ```help me do up a user guide in README.md```
+
+Went very well, Copilot parsed through my code for a general setup together with simple instructions for the commands that exist in the chatbot.

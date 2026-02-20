@@ -87,5 +87,3 @@ Prerequisites: JDK 17, update Intellij to the most recent version.
 
    - Fork the repository and open a pull request with focused changes.
    - Keep UI changes in `src/main/resources/view` and styles in `src/main/resources/styles`.
-
-   If you want, I can expand any section (examples, screenshots, or step-by-step IDE setup).
