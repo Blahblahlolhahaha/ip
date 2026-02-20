@@ -91,7 +91,7 @@ public abstract class Task {
             if(params.length < 4) {
                 throw new SadStudentException("Save file is corrupted!");
             }
-            assert params.length >= 4 : "Invalid task format: must have at least 3 parts";
+            assert params.length >= 4 : "Invalid task format: must have at least 4 parts";
             boolean mark = params[1].equals("X");
             int priority = Integer.parseInt(params[3]);
             Task result = null;
@@ -100,13 +100,19 @@ public abstract class Task {
                 result = new ToDo(mark, params[2], priority);
                 break;
             case "D":
-                assert params.length >= 5 : "Deadline task must have 4 parts";
+                if (params.length < 5) {
+                    throw new SadStudentException("Save file is corrupted!");
+                }
+                assert params.length >= 5 : "Deadline task must have 5 parts";
                 LocalDate by = Task.parseDate(params[4]);
                 assert by != null : "Parsed deadline date cannot be null";
                 result = new Deadline(mark, params[2], by, priority);
                 break;
             case "E":
-                assert params.length >= 6 : "Event task must have 5 parts";
+                if (params.length < 6) {
+                    throw new SadStudentException("Save file is corrupted!");
+                }
+                assert params.length >= 6 : "Event task must have 6 parts";
                 LocalDate to = Task.parseDate(params[4]);
                 LocalDate from = Task.parseDate(params[5]);
                 assert to != null && from != null : "Parsed event dates cannot be null";
