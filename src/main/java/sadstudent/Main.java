@@ -26,6 +26,7 @@ public class Main extends Application {
             // load application stylesheet
             scene.getStylesheets().add(Main.class.getResource("/styles/style.css").toExternalForm());
             stage.setScene(scene);
+            stage.setTitle("SadStudent");
             sadStudent = new SadStudent();
             fxmlLoader.<MainWindow>getController().setDuke(sadStudent); // inject the Duke instance
             stage.show();
