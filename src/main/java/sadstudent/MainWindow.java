@@ -30,6 +30,9 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        // make dialog container width follow the scroll viewport so children can wrap
+        dialogContainer.prefWidthProperty().bind(scrollPane.widthProperty().subtract(20.0));
+        scrollPane.setFitToWidth(true);
     }
 
     /** Injects the Duke instance */
@@ -46,9 +49,12 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = sadStudent.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, dukeImage));
+        // create dialog boxes and bind their label widths to the container
+        var userDialog = DialogBox.getUserDialog(input, userImage);
+        var dukeDialog = DialogBox.getDukeDialog(response, dukeImage);
+        userDialog.bindWidth(dialogContainer.widthProperty());
+        dukeDialog.bindWidth(dialogContainer.widthProperty());
+        dialogContainer.getChildren().addAll(userDialog, dukeDialog);
         userInput.clear();
     }
 }

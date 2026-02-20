@@ -23,13 +23,15 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            // load application stylesheet
+            scene.getStylesheets().add(Main.class.getResource("/styles/style.css").toExternalForm());
             stage.setScene(scene);
             sadStudent = new SadStudent();
             fxmlLoader.<MainWindow>getController().setDuke(sadStudent); // inject the Duke instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch(SadStudentException e) {
+        } catch (SadStudentException e) {
             new UI().showMessage(e.getMessage());
             System.exit(0);
         }

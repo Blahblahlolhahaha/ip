@@ -1,0 +1,53 @@
+/* Application styles for SadStudent UI */
+
+.root {
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: linear-gradient(#f7fafc, #edf2f7);
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-padding: 12;
+}
+
+.dialog {
+    -fx-padding: 8px;
+    -fx-spacing: 10px;
+}
+
+.dialog .label {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-padding: 8px 10px;
+    -fx-text-fill: #111827;
+    -fx-border-radius: 10px;
+}
+
+.dialog.user .label {
+    -fx-background-color: #7dd3fc;
+    /* soft blue */
+    -fx-text-fill: #022c43;
+}
+
+.dialog.duke .label {
+    -fx-background-color: #e6eef7;
+    /* light gray-blue */
+    -fx-text-fill: #0b2545;
+}
+
+.dialog ImageView,
+.dialog .image-view {
+    -fx-effect: dropshadow(two-pass-box, rgba(0, 0, 0, 0.12), 6, 0, 0, 2);
+}
+
+.text-field {
+    -fx-background-radius: 6px;
+    -fx-padding: 6px 8px;
+}
+
+.button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-background-radius: 6px;
+}
